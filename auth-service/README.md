@@ -31,6 +31,15 @@
 $ npm install
 ```
 
+## JWT configuration
+
+The auth service reads JWT settings from environment variables (or a local `.env` file):
+
+- `JWT_SECRET` is required and must be at least 32 bytes. Generate a secure value with `openssl rand -base64 32`.
+- `JWT_EXPIRES_IN` controls token lifetime and defaults to `15m` (for example, `1h`).
+
+Copy `.env.example` to `.env` for local development and replace the example secret. Do not commit real secrets. The JWT module is registered globally so services can inject `JwtService`.
+
 ## Compile and run the project
 
 ```bash
