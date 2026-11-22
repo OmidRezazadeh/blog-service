@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { AuthModule } from './auth/auth.module.js';
+import { AuthModule } from './module/auth.module.js';
 import { AuthService } from './module/application/service/auth.service.js';
 import { AuthController } from './module/presentation/controllers/auth.controller.js';
 
@@ -33,6 +33,6 @@ import { AuthController } from './module/presentation/controllers/auth.controlle
     AuthModule,
   ],
   controllers: [AppController, AuthController],
-  providers: [AppService, AuthService],
+  providers: [AppService],
 })
 export class AppModule {}
