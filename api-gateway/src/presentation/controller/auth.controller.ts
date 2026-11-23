@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../application/services/auth.service.js';
@@ -6,11 +6,13 @@ import { AccessTokenResponseDto } from '../dto/access-token-response.dto.js';
 import { LoginDto } from '../dto/login.dto.js';
 import { RegisterDto } from '../dto/register.dto.js';
 import { UserResponseDto } from '../dto/user-response.dto.js';
+import { RpcToHttpExceptionInterceptor } from '../interceptors/rpc-to-http-exception.interceptor.js';
 
 /**
  * HTTP endpoints for authentication and user lookup.
  */
 @ApiTags('auth')
+@UseInterceptors(RpcToHttpExceptionInterceptor)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -33,9 +35,7 @@ export class AuthController {
     return this.authService.register(registerDto);
   }
 
-  /**
-   * Returns every user from the user service.
-   */
+
   @Get('users')
   @ApiOperation({ summary: 'List all users' })
   @ApiOkResponse({
